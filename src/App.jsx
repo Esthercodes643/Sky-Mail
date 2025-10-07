@@ -42,7 +42,7 @@ function App() {
         }));
       }
     })
-  }, [])
+  }, [dispatch]);
 
   return (
     <div className='bg-[#F6F8FC] w-screen h-screen overflow-hidden'>

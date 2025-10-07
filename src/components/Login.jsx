@@ -10,6 +10,7 @@ const Login = () => {
     const dispatch = useDispatch();
      
     const signInWithGoogle = async () => {
+        
         try {
             const result = await signInWithPopup(auth, provider);
             dispatch(setAuthUser({
@@ -19,6 +20,7 @@ const Login = () => {
             }));
         } catch (error) {
             console.log(error);
+            
         }
     }
     return (
