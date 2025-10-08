@@ -1,3 +1,4 @@
+import React from 'react'
 import Navbar from './components/Navbar';
 import Inbox from './components/Inbox';
 import SendEmail from './components/SendEmail';
@@ -29,7 +30,10 @@ const router = createBrowserRouter([
 ])
 
 function App() {
+
   const { authUser } = useSelector(store => store.app);
+  
+  
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -45,7 +49,8 @@ function App() {
   }, [dispatch]);
 
   return (
-    <div className='bg-[#F6F8FC] w-screen h-screen overflow-hidden'>
+    <div className='bg-[#F6F8FC] w-screen h-screen overflow-hidden'>'
+
       {
         !authUser ? (
           <Login />

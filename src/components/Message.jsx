@@ -4,7 +4,7 @@ import { RiStarLine } from "react-icons/ri";
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { setSelectedMail } from '../redux/appSlice';
-import { motion } from "framer-motion";
+import { motion } from 'framer-motion';
 
 const Message = ({ email }) => {
     const dispatch = useDispatch();

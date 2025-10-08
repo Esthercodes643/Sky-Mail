@@ -5,6 +5,8 @@ import { MdOutlineWatchLater,MdOutlineKeyboardArrowDown,MdOutlineDrafts,MdInbox 
 import { TbSend2 } from "react-icons/tb";
 import { useDispatch } from 'react-redux';
 import { setOpen } from '../redux/appSlice';
+import { FaRegTrashCan } from "react-icons/fa6";
+import { AiOutlineStop } from "react-icons/ai";
 
 const sidebarItems = [
     {
@@ -26,6 +28,14 @@ const sidebarItems = [
     {
         icon: <MdOutlineDrafts size={"20px"} />,
         text: "Drafts"
+    },
+    {
+        icon:<FaRegTrashCan size={"20px"}/>,
+        text:"Trash"
+    },
+    {
+        icon:<AiOutlineStop size={"20px"}/>,
+        text:"Spam"
     },
 ]
 

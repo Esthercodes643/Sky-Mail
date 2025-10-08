@@ -1,5 +1,4 @@
 import React from 'react'
-import { motion } from 'framer-motion';
 import { useNavigate, useParams } from 'react-router-dom'
 import { IoMdMore, IoMdArrowBack } from "react-icons/io";
 import {
@@ -16,13 +15,12 @@ import { BiArchiveIn } from "react-icons/bi";
 import { useSelector } from 'react-redux';
 import { deleteDoc, doc } from 'firebase/firestore';
 import { db } from '../firebase';
-
+import { motion } from "framer-motion"
 
 const Mail = () => {
   const params = useParams();
   const navigate = useNavigate();
   const { selectedMail } = useSelector(store => store.app);
-
 
   const deleteMailById = async (id) => {
     try {

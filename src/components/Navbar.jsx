@@ -3,18 +3,22 @@ import { IoSettingsOutline } from "react-icons/io5";
 import { FaRegQuestionCircle } from "react-icons/fa";
 import { PiDotsNineBold } from "react-icons/pi";
 import { IoIosSearch } from "react-icons/io";
-import Avatar from 'react-avatar';
+
 import { RxHamburgerMenu } from "react-icons/rx";
 import { useDispatch, useSelector } from "react-redux";
 import { setAuthUser, setSearchText } from "../redux/appSlice";
 import { auth } from "../firebase.js";
 import { signOut } from 'firebase/auth';
-import { AnimatePresence } from 'framer-motion';
+
+import ProfileMenu from "./ProfileMenu";
+
 
 
 const Navbar = () => {
+  
+  
   const [search, setSearch] = useState("");
-  const [toggle, setToggle] = useState(false);
+  
   const dispatch = useDispatch();
   const { authUser } = useSelector(store => store.app);
 
@@ -31,7 +35,7 @@ const Navbar = () => {
 
 
   return (
-    <div className='flex items-center justify-between mx-3 h-16'>
+    <div className='flex items-center justify-between mx-4 h-16'>
       <div className='flex items-center gap-10'>
         <div className='flex items-center gap-2'>
           <div className='p-3 rounded-full hover:bg-gray-100 cursor-pointer'>
@@ -48,12 +52,13 @@ const Navbar = () => {
             type="text"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            placeholder='Seach mail'
+            placeholder='Search mail'
             className='rounded-full w-full bg-transparent outline-none px-1'
           />
         </div>
       </div>
       <div className='md:block hidden'>
+
         <div className='flex items-center gap-2'>
           <div className='p-3 rounded-full hover:bg-gray-100 cursor-pointer'>
             <FaRegQuestionCircle size={"20px"} />
@@ -64,22 +69,20 @@ const Navbar = () => {
           <div className='p-3 rounded-full hover:bg-gray-100 cursor-pointer'>
             <PiDotsNineBold size={"20px"} />
           </div>
+  
           <div className='relative cursor-pointer'>
-            <Avatar onClick={() => setToggle(!toggle)} src={authUser?.photoURL} googleId="118096717852922241760" size="40" round={true} />
-            <AnimatePresence>
-              {
-                toggle && (
-                  <motion.div
-                    initial={{ opacity: 0, scale: 0.8 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    exit={{ opacity: 0, scale: 0.8 }}
-                    transition={{ duration: 0.1 }}
-                    className='absolute right-2 z-20 shadow-lg bg-white rounded-md'>
-                    <p onClick={signOutHandler} className='p-2 underline'>LogOut</p>
-                  </motion.div>
-                )
-              }
-            </AnimatePresence>
+            <ProfileMenu 
+            
+      authUser={authUser} 
+      signOutHandler={() => {
+          signOutHandler(auth)
+            .then(() => dispatch(setAuthUser(null)))
+            .catch((err) => console.log(err));
+      }}
+          />
+            
+              
+            
           </div>
         </div>
       </div>
