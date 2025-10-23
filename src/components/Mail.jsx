@@ -75,7 +75,7 @@ const Mail = () => {
         <div className='flex justify-between bg-white items-center gap-1'>
           <div className='flex items-center gap-2'>
             <h1 className='text-xl font-medium'>{selectedMail?.subject}</h1>
-            <span className='text-sm bg-gray-200 rounded-md px-2'>inbox</span>
+            <span className='text-sm bg-gray-200 rounded-md px-2'>Inbox</span>
           </div>
           <div className="flex-none text-gray-400 my-5 text-sm">
             <p>{new Date(selectedMail?.createdAt?.seconds * 1000).toUTCString()}</p>
@@ -94,3 +94,5 @@ const Mail = () => {
 }
 
 export default Mail
+
+
