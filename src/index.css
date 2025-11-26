@@ -1,3 +1,33 @@
 @import "tailwindcss";
   
 
+:root {
+  --primary: #3A8DFF;
+  --primary-light: #EAF3FF;
+  --primary-dark: #1B2A4A;
+
+  --background: #F8FAFF;
+  --surface: #FFFFFF;
+
+  --border: #E0E6F1;
+
+  --text-dark: #1B1F29;
+  --text-medium: #4B5563;
+  --text-light: #9CA3AF;
+
+  --success: #2ECC71;
+  --danger: #FF4E4E;
+}
+
+
+body {
+  background: var(--background);
+  font-family: 'Inter', sans-serif;
+}
+
+/* Soft modern shadows */
+.sm-card {
+  background: var(--surface);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
+  border-radius: 14px;
+}

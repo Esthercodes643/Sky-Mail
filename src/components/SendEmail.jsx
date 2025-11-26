@@ -7,14 +7,17 @@ import { collection, addDoc, serverTimestamp } from "firebase/firestore";
 import { motion, AnimatePresence } from "framer-motion";
 
 const SendEmail = () => {
+  const dispatch = useDispatch();
+  const { open, authUser } = useSelector((store) => store.app);
+
   const [formData, setFormData] = useState({
     recipients: "",
     subject: "",
     message: "",
   });
 
-  const { open, authUser } = useSelector((store) => store.app);
-  const dispatch = useDispatch();
+  const [loading, setLoading] = useState(false);
+  const [success, setSuccess] = useState(false);
 
   const changeEventHandler = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -23,93 +26,113 @@ const SendEmail = () => {
   const submitHandler = async (e) => {
     e.preventDefault();
 
-    if (!authUser?.email) {
-      alert("Please log in to send an email.");
-      return;
+    if (!authUser?.email) return;
+
+    setLoading(true);
+
+    try {
+      await addDoc(collection(db, "emails"), {
+        from: authUser.email,
+        to: formData.recipients,
+        subject: formData.subject,
+        message: formData.message,
+        createdAt: serverTimestamp(),
+      });
+
+      setSuccess(true);
+      setLoading(false);
+
+      // ✅ Close instantly after success
+      setTimeout(() => {
+        dispatch(setOpen(false));
+        setSuccess(false);
+        setFormData({ recipients: "", subject: "", message: "" });
+      }, 600);
+    } catch (err) {
+      console.error("Send mail error:", err);
+      setLoading(false);
     }
-
-    await addDoc(collection(db, "emails"), {
-      from: authUser.email,
-      to: formData.recipients,
-      subject: formData.subject,
-      message: formData.message,
-      createdAt: serverTimestamp(),
-    });
-
-    setFormData({ recipients: "", subject: "", message: "" });
-    dispatch(setOpen(false));
   };
 
   return (
     <AnimatePresence>
       {open && (
         <motion.div
-          className="fixed inset-0 z-50 flex justify-center items-end sm:items-center"
+          className="fixed inset-0 z-50 flex items-center justify-center bg-[#dbeafe]/60 backdrop-blur-md"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          transition={{ duration: 0.2 }}
         >
+          {/* Glass Compose Card */}
           <motion.div
-            initial={{ y: 100, opacity: 0, scale: 0.95 }}
+            initial={{ y: 80, opacity: 0, scale: 0.9 }}
             animate={{ y: 0, opacity: 1, scale: 1 }}
-            exit={{ y: 50, opacity: 0, scale: 0.95 }}
-            transition={{
-              type: "spring",
-              stiffness: 250,
-              damping: 20,
-            }}
-            className="bg-white w-full sm:max-w-3xl sm:rounded-t-md sm:shadow-xl sm:shadow-slate-600 
-              sm:mx-0 mx-2 sm:mb-0 mb-0 rounded-t-2xl flex flex-col max-h-[90vh] sm:max-h-none overflow-hidden"
+            exit={{ y: 60, opacity: 0, scale: 0.9 }}
+            transition={{ type: "spring", stiffness: 180, damping: 22 }}
+            className="w-full max-w-xl rounded-2xl bg-white/70 backdrop-blur-xl shadow-2xl border border-white/40 p-5"
           >
             {/* Header */}
-            <div className="flex px-3 py-2 bg-[#F2F6FC] items-center justify-between rounded-t-md">
-              <h1 className="font-medium">New Message</h1>
-              <div
+            <div className="flex items-center justify-between mb-4">
+              <h2 className="font-semibold text-sky-700 text-lg">
+               SkyMail
+              </h2>
+
+              <button
                 onClick={() => dispatch(setOpen(false))}
-                className="p-2 rounded-full hover:bg-gray-200 cursor-pointer"
+                className="p-2 rounded-full hover:bg-sky-100"
               >
-                <RxCross2 />
-              </div>
+                <RxCross2 size={18} />
+              </button>
             </div>
 
-            {/* Form */}
-            <form onSubmit={submitHandler} className="flex flex-col p-3 gap-2">
-              <input
-                onChange={changeEventHandler}
-                name="recipients"
-                value={formData.recipients}
-                type="email"
-                placeholder="Recipient"
-                className="outline-none py-1 border-b border-gray-200 text-sm"
-                required
-              />
-              <input
-                onChange={changeEventHandler}
-                name="subject"
-                value={formData.subject}
-                type="text"
-                placeholder="Subject"
-                className="outline-none py-1 border-b border-gray-200 text-sm"
-              />
-              <textarea
-                onChange={changeEventHandler}
-                name="message"
-                value={formData.message}
-                rows="10"
-                placeholder="Write your message..."
-                className="outline-none py-1 resize-none border-b border-gray-200 text-sm"
-              ></textarea>
-
-              <div className="flex justify-between items-center mt-2">
-                <button
-                  type="submit"
-                  className="bg-[#0B57D0] rounded-full px-6 py-2 text-white font-medium hover:bg-[#084ab1] transition-all"
-                >
-                  Send
-                </button>
+            {/*  SUCCESS UI */}
+            {success ? (
+              <div className="text-center py-10">
+                <p className="text-green-600 font-semibold text-lg">
+                  ✅ Email Sent Successfully!
+                </p>
               </div>
-            </form>
+            ) : (
+              <form onSubmit={submitHandler} className="flex flex-col gap-3">
+                <input
+                  name="recipients"
+                  value={formData.recipients}
+                  onChange={changeEventHandler}
+                  type="email"
+                  placeholder="To"
+                  required
+                  className="bg-transparent border-b border-sky-200 py-2 text-sm outline-none focus:border-sky-500"
+                />
+
+                <input
+                  name="subject"
+                  value={formData.subject}
+                  onChange={changeEventHandler}
+                  type="text"
+                  placeholder="Subject"
+                  className="bg-transparent border-b border-sky-200 py-2 text-sm outline-none focus:border-sky-500"
+                />
+
+                <textarea
+                  name="message"
+                  value={formData.message}
+                  onChange={changeEventHandler}
+                  rows="7"
+                  placeholder="Write your message..."
+                  className="bg-transparent border-b border-sky-200 py-2 text-sm outline-none resize-none focus:border-sky-500"
+                />
+
+                <div className="flex justify-end mt-3">
+                  <button
+                    type="submit"
+                    disabled={loading}
+                    className="px-6 py-2 rounded-full bg-sky-600 hover:bg-sky-700 text-white text-sm shadow-md transition-all disabled:opacity-60"
+                  >
+                    {loading ? "Sending..." : "Send ✈️"}
+                  </button>
+                </div>
+              </form>
+            )}
           </motion.div>
         </motion.div>
       )}
@@ -118,4 +141,12 @@ const SendEmail = () => {
 };
 
 export default SendEmail;
+
+
+
+
+
+
+
+
 

@@ -1,12 +1,7 @@
 import React, { useState } from "react";
-import { MdCropSquare } from "react-icons/md";
+import { MdCropSquare, MdInbox, MdKeyboardArrowLeft, MdKeyboardArrowRight } from "react-icons/md";
 import { FaCaretDown, FaUserFriends } from "react-icons/fa";
 import { IoMdRefresh, IoMdMore } from "react-icons/io";
-import {
-  MdKeyboardArrowLeft,
-  MdKeyboardArrowRight,
-  MdInbox,
-} from "react-icons/md";
 import { GoTag } from "react-icons/go";
 import Messages from "./Messages";
 import { useSelector } from "react-redux";
@@ -22,61 +17,57 @@ const Inbox = () => {
   const { emails } = useSelector((store) => store.app);
 
   return (
-    <div className="flex-1 bg-white rounded-xl mx-2 sm:mx-5 shadow-sm overflow-hidden">
-      {/* Top controls */}
-      <div className="flex flex-wrap items-center justify-between px-3 sm:px-4 py-2 border-b border-gray-200">
-        <div className="flex items-center gap-2 text-gray-700 flex-wrap">
+    <div className="flex-1 bg-white rounded-xl mx-2 md:mx-5 shadow-sm overflow-hidden">
+
+      {/*  TOP BAR */}
+      <div className="flex items-center justify-between px-3 md:px-4 py-2 border-b">
+        <div className="flex items-center gap-2 text-gray-700">
           <div className="flex items-center gap-1">
             <MdCropSquare size={20} />
             <FaCaretDown size={16} />
           </div>
-          <button className="p-2 rounded-full hover:bg-gray-100">
+
+          <div className="p-2 rounded-full hover:bg-gray-100 cursor-pointer">
             <IoMdRefresh size={20} />
-          </button>
-          <button className="p-2 rounded-full hover:bg-gray-100">
+          </div>
+
+          <div className="p-2 rounded-full hover:bg-gray-100 cursor-pointer">
             <IoMdMore size={20} />
-          </button>
+          </div>
         </div>
 
-        <div className="flex items-center gap-1 sm:gap-2 mt-2 sm:mt-0">
-          <p className="text-xs sm:text-sm text-gray-500">
-            1–50 of {emails?.length}
-          </p>
-          <button
-            disabled={false}
-            className="p-1 hover:rounded-full hover:bg-gray-100"
-          >
+        <div className="flex items-center gap-1 text-sm text-gray-500">
+          <span>1 – {emails?.length || 0}</span>
+          <button className="hover:bg-gray-100 p-1 rounded">
             <MdKeyboardArrowLeft size={22} />
           </button>
-          <button
-            disabled={false}
-            className="p-1 hover:rounded-full hover:bg-gray-100"
-          >
+          <button className="hover:bg-gray-100 p-1 rounded">
             <MdKeyboardArrowRight size={22} />
           </button>
         </div>
       </div>
 
-      {/* Mail categories */}
-      <div className="flex overflow-x-auto no-scrollbar border-b border-gray-200">
+      {/*  TAB LAYOUT */}
+      <div className="flex w-full border-b overflow-x-auto no-scrollbar">
         {mailType.map((item, index) => (
           <button
             key={index}
-            className={`flex items-center flex-shrink-0 gap-2 px-4 py-3 sm:py-4 text-sm sm:text-base ${
-              mailTypeSelected === index
-                ? "border-b-4 border-blue-600 text-blue-600 font-medium"
-                : "border-b-4 border-transparent text-gray-600 hover:bg-gray-100"
-            }`}
             onClick={() => setMailTypeSelected(index)}
+            className={`flex-1 flex items-center justify-center gap-2 py-3 text-sm md:text-base transition-all
+              ${
+                mailTypeSelected === index
+                  ? "border-b-4 border-sky-500 text-sky-600 font-medium bg-sky-50"
+                  : "text-gray-600 hover:bg-gray-100"
+              }`}
           >
             {item.icon}
-            <span>{item.text}</span>
+            <span className="whitespace-nowrap">{item.text}</span>
           </button>
         ))}
       </div>
 
-      {/* Mail list */}
-      <div className="h-[calc(100vh-180px)] sm:h-[90vh] overflow-y-auto">
+      {/*  MESSAGE LIST WRAPPER  */}
+      <div className="h-[calc(100vh-135px)] md:h-[calc(100vh-110px)] overflow-y-auto">
         <Messages />
       </div>
     </div>
