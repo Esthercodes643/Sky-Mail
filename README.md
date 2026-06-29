@@ -11,11 +11,11 @@ Compose, receive, and manage emails in real time with Google authentication.
 
 | Login | Inbox |
 |-------|-------|
-| ![Login](./screenshots/login.png) | ![Inbox](./screenshots/inbox.png) |
+| ![Login](./screenshots/login.jpg) | ![Inbox](./screenshots/inbox.jpg) |
 
 | Sidebar | Compose |
 |---------|---------|
-| ![Sidebar](./screenshots/sidebar.png) | ![Compose](./screenshots/compose.png) |
+| ![Sidebar](./screenshots/sidebar.jpg) | ![Compose](./screenshots/compose.jpg) |
 
 ---
 
