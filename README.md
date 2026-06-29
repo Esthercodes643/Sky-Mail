@@ -1,16 +1,68 @@
-# React + Vite ---->>Sky mail
+# ✉️ Sky Mail
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A modern, fast & secure email client built with React and Firebase — inspired by Gmail.
+Compose, receive, and manage emails in real time with Google authentication.
 
-Currently, two official plugins are available:
+🔗 **[Live Demo](https://sky-mail-787d2.web.app/)**
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+---
 
-## React Compiler
+## Screenshots
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+| Login | Inbox |
+|-------|-------|
+| ![Login](./screenshots/login.png) | ![Inbox](./screenshots/inbox.png) |
 
-## Expanding the ESLint configuration
+| Sidebar | Compose |
+|---------|---------|
+| ![Sidebar](./screenshots/sidebar.png) | ![Compose](./screenshots/compose.png) |
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+---
+
+## Features
+
+- 🔐 Google Sign-In via Firebase Auth
+- 📥 Real-time inbox powered by Firestore
+- 📂 Full sidebar — Inbox, Sent, Starred, Drafts, Trash, Spam
+- ✏️ Compose window with To, Subject & Message fields
+- 📄 Paginated email list
+- ☁️ Deployed and live on Firebase Hosting
+
+## Tech Stack
+
+| Layer | Tech |
+|-------|------|
+| Frontend | React, Vite |
+| Styling | CSS |
+| Auth | Firebase Authentication (Google) |
+| Database | Cloud Firestore |
+| Deployment | Firebase Hosting |
+
+## Getting Started
+
+```bash
+git clone https://github.com/Esthercodes643/Sky-Mail.git
+cd Sky-Mail
+npm install
+```
+
+Create a `.env` file in the root and add your Firebase config:
+
+```env
+VITE_API_KEY=your_api_key
+VITE_AUTH_DOMAIN=your_auth_domain
+VITE_PROJECT_ID=your_project_id
+VITE_STORAGE_BUCKET=your_storage_bucket
+VITE_MESSAGING_SENDER_ID=your_sender_id
+VITE_APP_ID=your_app_id
+```
+
+```bash
+npm run dev
+```
+
+> ⚠️ Never commit your `.env` file. It's already in `.gitignore`.
+
+---
+
+Built by [Esther](https://github.com/Esthercodes643) 🚀
