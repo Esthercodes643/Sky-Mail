@@ -11,7 +11,7 @@ Compose, receive, and manage emails in real time with Google authentication.
 
 | Login | Inbox |
 |-------|-------|
-| ![Login](./screenshots/login.jpg) | ![Inbox](./screenshots/inbox.jpg) |
+| ![Login](./screenshots/Login.jpg) | ![Inbox](./screenshots/inbox.jpg) |
 
 | Sidebar | Compose |
 |---------|---------|
